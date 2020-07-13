@@ -39,7 +39,7 @@ from numpy import (
 from numpy.linalg import lstsq
 from pandas import Categorical, DataFrame, Series
 from pandas.api.types import is_categorical_dtype
-import scipy.sparse as sp
+from scipy import sparse as sp
 from scipy.sparse import csc_matrix
 from scipy.sparse.linalg import lsmr
 

@@ -5,7 +5,7 @@ from typing import Dict, List, NamedTuple, Optional, Sequence, Tuple, TypeVar, U
 
 import numpy as np
 from pandas import DataFrame, date_range
-import scipy.sparse as sp
+from scipy import sparse as sp
 
 from linearmodels.shared.utility import panel_to_frame
 from linearmodels.typing import NDArray
