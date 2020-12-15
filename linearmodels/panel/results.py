@@ -939,7 +939,7 @@ class PanelModelComparison(_ModelComparison):
         results: Union[List[PanelModelResults], Dict[str, PanelModelResults]],
         *,
         precision: str = "tstats",
-        stars: bool = False,
+        stars: bool = True,
     ) -> None:
         super().__init__(results, precision=precision, stars=stars)
 
@@ -1121,8 +1121,8 @@ class PanelModelComparison(_ModelComparison):
 def compare(
     results: Union[List[PanelModelResults], Dict[str, PanelModelResults]],
     *,
-    precision: str = "tstats",
-    stars: bool = False,
+    precision: str = "pvalues",
+    stars: bool = True,
 ) -> PanelModelComparison:
     """
     Compare the results of multiple models
