@@ -940,9 +940,9 @@ class PanelModelComparison(_ModelComparison):
         *,
         precision: str = "tstats",
         stars: bool = True,
-    ) -> None:
+    ):
+        self.stars = stars
         super().__init__(results, precision=precision, stars=stars)
-
     @property
     def rsquared_between(self) -> Series:
         """Coefficients of determination (R**2)"""
@@ -1114,7 +1114,12 @@ class PanelModelComparison(_ModelComparison):
         )
         smry.tables.append(table)
         prec_type = self._PRECISION_TYPES[self._precision]
-        smry.add_extra_txt(["{0} reported in parentheses".format(prec_type)])
+
+        note = ['{0} reported in parentheses'.format(prec_type)]
+        if self.stars:
+            note = note + ['\t * p<.1, ** p<.05, *** p<.01']
+        smry.add_extra_txt(note)
+
         return smry
 
 
