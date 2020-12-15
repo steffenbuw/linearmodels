@@ -1026,7 +1026,7 @@ class PanelModelComparison(_ModelComparison):
             vals[i] = [f(v) for v in vals[i]]
 
         params = self.params
-        pvalues = np.asarray(self.pvalues)
+        p_values = np.asarray(self.pvalues)
         precision = getattr(self, self._precision)
 
         params_fmt = []
