@@ -1018,6 +1018,7 @@ class PanelModelComparison(_ModelComparison):
         )
         vals = [[i for i in v] for v in vals.T.values]
         vals[2] = [str(v) for v in vals[2]]
+
         for i in range(4, len(vals)):
             f = _str
             if i == 9:
@@ -1025,12 +1026,45 @@ class PanelModelComparison(_ModelComparison):
             vals[i] = [f(v) for v in vals[i]]
 
         params = self.params
-        precision = getattr(self, self._precision)
         pvalues = np.asarray(self.pvalues)
+        precision = getattr(self, self._precision)
+
         params_fmt = []
         params_stub = []
+
+        # Iterate rows of params
         for i in range(len(params)):
+
+            params_fmt_temp = []
+            precision_fmt_temp = []
+
+            for y in range(len(params.values[i])):
+                p_values_v = p_values.values[i][y]
+                preci_v = precision.values[i][y]
+                params_str_v = _str(params.values[i][y])
+                preci_v_str = _str(round(preci_v, 4))
+                precision_fmt_temp.append('({0})'.format(preci_v_str) if preci_v_str.strip() else preci_v_str)
+                if self.stars:
+                    if p_values_v < .1:
+                        params_str_v = params_str_v + '*'
+                    if p_values_v < .05:
+                        params_str_v = params_str_v + '*'
+                    if p_values_v < .01:
+                        params_str_v = params_str_v + '*'
+
+                params_fmt_temp.append(params_str_v)
+
+            params_fmt.append(params_fmt_temp)
+            params_fmt.append(precision_fmt_temp)
+            params_stub.append(params.index[i])
+            params_stub.append(' ')
+
+        '''
+        # Iterate rows of params
+        for i in range(len(params)):
+            
             formatted_and_starred = []
+            
             for v, pv in zip(params.values[i], pvalues[i]):
                 formatted_and_starred.append(add_star(_str(v), pv, self._stars))
             params_fmt.append(formatted_and_starred)
@@ -1043,7 +1077,7 @@ class PanelModelComparison(_ModelComparison):
             params_fmt.append(precision_fmt)
             params_stub.append(params.index[i])
             params_stub.append(" ")
-
+        '''
         vals = table_concat((vals, params_fmt))
         stubs = stub_concat((stubs, params_stub))
 
